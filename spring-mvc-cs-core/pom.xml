@@ -2,9 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.rest</groupId>
-    <artifactId>spring-mvc-parent</artifactId>
+    <artifactId>spring-mvc-cs-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spring-mvc-api</artifactId>
-  <packaging>war</packaging>
+  <artifactId>spring-mvc-cs-core</artifactId>
 </project>
