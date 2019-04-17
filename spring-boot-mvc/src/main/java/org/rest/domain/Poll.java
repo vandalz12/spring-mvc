@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "polls")
 public class Poll {
@@ -26,6 +29,7 @@ public class Poll {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "POLL_ID")
+	@Fetch(FetchMode.JOIN)
 	@OrderBy
 	private Set<Option> options;
 

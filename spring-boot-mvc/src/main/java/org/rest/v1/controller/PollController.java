@@ -1,4 +1,4 @@
-package org.rest.controller;
+package org.rest.v1.controller;
 
 import java.net.URI;
 import java.util.Optional;
@@ -24,7 +24,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RestController
+@RestController("pollControllerV1")
+@RequestMapping(value = "v1")
 @Api(tags = "polls", description = "Poll API")
 public class PollController {
 

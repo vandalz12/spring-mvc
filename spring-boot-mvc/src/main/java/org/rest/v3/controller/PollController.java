@@ -1,4 +1,4 @@
-package org.rest.controller;
+package org.rest.v3.controller;
 
 import java.net.URI;
 import java.util.Optional;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RestController
+@RestController("pollControllerV3")
+@RequestMapping(value = {"/v3/", "/oauth2/v3/"})
 @Api(tags = "polls", description = "Poll API")
 public class PollController {
 
@@ -60,6 +62,33 @@ public class PollController {
 			throw new ResourceNotFoundException("Poll with id " + pollId + " not found");
 		}
 		return new ResponseEntity<Poll>(poll.get(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/polls/{pollId}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId) {
+		pollRepository.save(poll);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/polls/{pollId}", method = RequestMethod.DELETE)
+	@PreAuthorize("hasAuthority('ROLE_TRUSTED_CLIENT')")
+	public ResponseEntity<Void> deletePoll(@PathVariable Long pollId) {
+		pollRepository.deleteById(pollId);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/polls/test", method = RequestMethod.GET)
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Poll> test() {
+		Poll poll = new Poll();
+		return new ResponseEntity<Poll>(poll, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/polls/test1", method = RequestMethod.GET)
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Poll> test1() {
+		Poll poll = new Poll();
+		return new ResponseEntity<Poll>(poll, HttpStatus.OK);
 	}
 	
 }
