@@ -1,0 +1,33 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="winGuestSetup" title="" border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.guestbook.viewmodel.GuestSetupViewModel')">
+<groupbox mold="3d" closable="false">
+		<caption label="Guest Book Setup"/>
+		<grid>
+			<columns>
+				<column width="150px" align="right"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<label value="Name"/>
+					<textbox id="txtName" width="400px" maxlength="255" value="@bind(vm.guest.guestName)" readonly="@load(vm.action eq null ? false : vm.action eq 'DETAIL' ? true : false)"/>
+				</row>
+				<row>
+					<label value="Address"/>
+					<textbox id="txtAddress" maxlength="255" rows="5" cols="35" value="@bind(vm.guest.address)"/>
+				</row>
+				<row>
+					<label value="Guest Date"/>
+					<datebox id="dtbGuestDate" readonly="false" value="@bind(vm.guest.guestDate)" format="dd-MMM-yyyy"/>
+				</row>
+			</rows>
+		</grid>
+		<separator height="10px"/>
+		<div style="position:relative; width:100%;">
+			<button label="Cancel" style="float:right;" onClick="@command('onCancel')"/>
+			<button label="Save" style="float:right; margin-right:45%;" onClick="@command('onSave')"/>
+		</div>
+	</groupbox>
+</window>
+</zk>

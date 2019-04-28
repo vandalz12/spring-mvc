@@ -1,0 +1,52 @@
+<?page title="" contentType="text/html;charset=UTF-8"?>
+<?xel-method prefix="globalVariable" name="formatDate" class="org.guestbook.util.GlobalVariable" signature="java.lang.String formatDate(java.util.Date)"?>
+<zk>
+<window id="winGuestbookInquiry" title="" border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.guestbook.viewmodel.GuestbookInquiryViewModel')">
+	<groupbox mold="3d" closable="false">
+		<caption label="Guest Book Inquiry"/>
+		<grid>
+			<columns>
+				<column width="150px"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<label value="Name"/>
+					<textbox id="txtName" width="200px" value="@bind(vm.guest.guestName)"/>
+				</row>
+				<row>
+					<label value="Address"/>
+					<textbox id="txtAddress" width="400px" value="@bind(vm.guest.address)"/>
+				</row>
+				<row>
+					<label/>
+					<hbox>
+						<button id="btnFind" label="Find" onClick="@command('onFind')"/>
+						<button id="btnNew" label="New" onClick="@command('onNew')"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<separator height="20px"/>
+		<listbox id="lstGuest" model="@load(vm.guests)" emptyMessage="No Data Found">
+			<listhead>
+				<listheader label="Action"/>
+				<listheader label="Name"/>
+				<listheader label="Address"/>
+				<listheader label="Guest Date"/>
+			</listhead>
+			<template name="model">
+				<listitem value="@load(each)">
+					<listcell>
+						<a label="Detail" onClick="@command('onDetail', data=each)"/>
+					</listcell>
+					<listcell label="@load(each.guestName)"/>
+					<listcell label="@load(each.address)"/>
+					<listcell label="@load(globalVariable:formatDate(each.guestDate))"/>
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pagingGuestbook" pageSize="10" onPaging="@command('onPaging')"/>
+	</groupbox>
+</window>
+</zk>
